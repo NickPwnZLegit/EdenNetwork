@@ -1,0 +1,13 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {castSyntheticBallot,tallySyntheticBallots,SAMPLE_PROPOSALS} from "../governance/dao-policy.mjs";
+const proposalId=SAMPLE_PROPOSALS[0].id;
+test("one base synthetic vote",()=>assert.equal(tallySyntheticBallots(castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"support"}),proposalId).support,1));
+test("one optional holder bonus capped at two",()=>assert.equal(tallySyntheticBallots(castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"support",edenHolder:true}),proposalId).support,2));
+test("duplicate per proposal rejected",()=>{const a=castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"support"});assert.throws(()=>castSyntheticBallot(a,{proposalId,fixtureMember:"demo-member-1",choice:"oppose"}));});
+test("different proposals are independently scoped",()=>{let a=castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"support"});a=castSyntheticBallot(a,{proposalId:SAMPLE_PROPOSALS[1].id,fixtureMember:"demo-member-1",choice:"oppose"});assert.equal(tallySyntheticBallots(a,SAMPLE_PROPOSALS[1].id).oppose,1);});
+test("do not accept real account UIDs",()=>assert.throws(()=>castSyntheticBallot({},{proposalId,fixtureMember:"private-person",choice:"support"})));
+test("holder flag is explicit boolean",()=>assert.throws(()=>castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"support",edenHolder:"yes"})));
+test("invalid proposals rejected",()=>assert.throws(()=>castSyntheticBallot({},{proposalId:"real-vote",fixtureMember:"demo-member-1",choice:"support"})));
+test("choices bounded",()=>assert.throws(()=>castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"transfer"})));
+test("no wallet or identity in simulated ballot",()=>{const a=castSyntheticBallot({},{proposalId,fixtureMember:"demo-member-1",choice:"support"});assert.deepEqual(Object.keys(a[proposalId+"::demo-member-1"]).sort(),["choice","synthetic","weight"]);});
