@@ -1,0 +1,13 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {readFileSync} from "node:fs";
+const html=readFileSync(new URL("../index.html",import.meta.url),"utf8");
+const release=readFileSync(new URL("../docs/releases/EDEN_PUBLIC_SITE_AND_DAO_HANDOFF_2026-11-18.md",import.meta.url),"utf8");
+test("all ecosystem destinations have HTTPS links",()=>{for(const domain of ["light-of-hope.net","pwnz.live","hope-labs-research.vercel.app"])assert.match(html,new RegExp('https://'+domain.replaceAll('.','\\.')));});
+test("page disclaims production ZK functionality",()=>assert.match(html,/no ZK enrollment yet/i));
+test("timestamp does not imply uniqueness",()=>assert.match(html,/timestamp does not establish/i));
+test("DAO decisions described as research",()=>assert.match(html,/not live voting/i));
+test("no password or biometric collection form",()=>assert.ok(!/<input[^>]*(password|file|email)/i.test(html)));
+test("no raw Firebase credentials or private keys",()=>assert.ok(!/(FIREBASE_ADMIN_PRIVATE_KEY|-----BEGIN PRIVATE KEY-----|serviceAccountKey)/.test(html)));
+test("deployment provenance gate documented",()=>assert.match(release,/source provenance/));
+test("explicitly preserves old Vercel site",()=>assert.match(release,/do not overwrite/i));
