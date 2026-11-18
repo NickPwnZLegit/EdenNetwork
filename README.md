@@ -18,4 +18,8 @@ EdenNetwork is building a shared identity and community-governance foundation in
 - [Release gates and Vercel handoff](docs/releases/RELEASE_GATES.md)
 - [Security policy](SECURITY.md)
 
-**Release policy:** reviewed PRs, validated tests and explicit deployment approval. Do not commit credentials, private recovery data, real member records or biometric material. 
+**Release policy:** reviewed PRs, validated tests and explicit deployment approval. Do not commit credentials, private recovery data, real member records or biometric material.
+
+## Git-controlled EdenNetwork site candidate (November 18, 2026)
+
+The repository contains a **public-safe static candidate** in [index.html](index.html). The GitHub-to-Vercel integration remains under review; it does not replace the current live EdenNetwork site or activate RealID/DAO systems. See [release and privacy gates](docs/releases/EDEN_PUBLIC_SITE_AND_DAO_HANDOFF_2026-11-18.md).
