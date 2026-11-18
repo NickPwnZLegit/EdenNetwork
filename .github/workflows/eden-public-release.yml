@@ -21,5 +21,7 @@ jobs:
           node --check account/account.js
           node --check governance/governance.js
           node --check governance/dao-policy.mjs
+      - name: Eden HOPE and EDEN token policy checks
+        run: node --test tests/eden-token-scope.test.mjs
       - name: Public site and release gate tests
         run: node --test tests/public-site-release.test.mjs
