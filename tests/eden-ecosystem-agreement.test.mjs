@@ -26,3 +26,11 @@ test("acceptance uses one shared Firebase document and append-only history",()=>
 test("DAO ballots and wallet transactions never authorize agreement",()=>{
  assert.doesNotMatch(account,/sendTransaction|executeDAOProposal|biometricEnroll/);
 });
+
+test("Eden authentication renewals cannot act on stale login sessions",()=>{
+ assert.match(account,/let authRevision=0/);
+ assert.match(account,/const revision=\+\+authRevision/);
+ assert.match(account,/revision!==authRevision\|\|auth\.currentUser\?\.uid!==user\.uid/);
+ assert.match(account,/if\(auth\?\.currentUser\?\.uid!==user\.uid\)return/);
+ assert.match(account,/if\(ownerReady\)await checkAgreementAfterLogin\(user\)/);
+});
