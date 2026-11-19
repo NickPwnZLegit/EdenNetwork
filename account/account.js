@@ -3,6 +3,7 @@ import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmai
 import {getFirestore,doc,getDoc,collection,writeBatch,serverTimestamp,Timestamp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 const $=id=>document.getElementById(id);
 let auth=null,db=null,registryEnabled=false,mode="signin",agreementTerms=null;
+let authRevision=0;
 const AGREEMENT_VERSION="ecosystem-2026.11.18.1";
 const RENEW_KEY="eden-ecosystem-reauth-v1";
 const pending=()=>{try{return sessionStorage.getItem(RENEW_KEY)||""}catch{return ""}};
@@ -36,19 +37,22 @@ async function displayTerms(){
  }catch(e){const p=document.createElement("p");p.textContent=e.message;host.append(p);termsStatus("Acceptance is paused until the canonical terms can be verified.");}
 }
 async function checkAgreementAfterLogin(user){
- if(!user||!db)return;
+ if(!user||!db||auth?.currentUser?.uid!==user.uid)return;
  try{
   const snap=await getDoc(doc(db,"agreements",user.uid));
+  if(auth?.currentUser?.uid!==user.uid)return;
   const a=snap.exists()?snap.data():{};
   const current=a.accepted===true&&a.agreementVersion===AGREEMENT_VERSION&&
    (a.uid==null||a.uid===user.uid)&&a.expiresAt?.toMillis?.()>Date.now();
   if(current){clear();$("eden-agreement-panel").hidden=true;return;}
+  if(auth?.currentUser?.uid!==user.uid)return;
   if(pending()!==user.uid&&mark(user.uid)){
    status("Your agreement needs renewal. Sign in again to review it.");
    const completed=await signOut(auth).then(()=>true).catch(()=>false);
    if(completed)return;
    clear();
   }
+  if(auth?.currentUser?.uid!==user.uid)return;
   $("eden-agreement-panel").hidden=false;
   status("Please review the shared 30-day ecosystem agreement before participating.");
   await displayTerms();
@@ -101,6 +105,7 @@ async function loadOwner(user){
  $("complete-panel").hidden=true;
  try{
   const o=await getDoc(doc(db,"edenRealIdOwners",user.uid));
+  if(auth?.currentUser?.uid!==user.uid)return false;
   if(o.exists()&&["active","grandfathered"].includes(o.data().status)){
    $("account-status").textContent="Eden RealID: "+(o.data().displayName||"registered")+" · UID kept private";
    return true;
@@ -157,9 +162,17 @@ $("logout").addEventListener("click",()=>auth&&signOut(auth));
   try{await setPersistence(auth,browserLocalPersistence);}catch{status("Persistent sign-in unavailable on this browser.");}
   selectMode("signin");
   onAuthStateChanged(auth,async user=>{
+   const revision=++authRevision;
    screen(user);
-   if(user){status("Account authenticated on this site.");const ownerReady=await loadOwner(user);if(ownerReady)await checkAgreementAfterLogin(user);}
-   else{status(pending()?"Please sign in again to review and renew your ecosystem agreement.":"Choose existing sign-in or create Eden RealID.");$("renewal-notice").hidden=!pending();$("eden-agreement-panel").hidden=true;}
+   if(user){
+    status("Account authenticated on this site.");
+    const ownerReady=await loadOwner(user);
+    if(revision!==authRevision||auth.currentUser?.uid!==user.uid)return;
+    if(ownerReady)await checkAgreementAfterLogin(user);
+   }else{
+    status(pending()?"Please sign in again to review and renew your ecosystem agreement.":"Choose existing sign-in or create Eden RealID.");
+    $("renewal-notice").hidden=!pending();$("eden-agreement-panel").hidden=true;
+   }
   });
  }catch{status("Eden account service is unavailable. Production accounts were not modified.");}
 })();
