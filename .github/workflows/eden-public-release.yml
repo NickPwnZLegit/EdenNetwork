@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: '22'
       - name: Shared Eden account and DAO synthetic policy tests
-        run: node --test tests/eden-account-gateway.test.mjs tests/dao-policy.test.mjs
+        run: node --test tests/eden-account-gateway.test.mjs tests/dao-policy.test.mjs tests/dao-eligibility.test.mjs
       - name: Client and server JavaScript syntax
         run: |
           node --check api/eden-config.js
@@ -21,6 +21,7 @@ jobs:
           node --check account/account.js
           node --check governance/governance.js
           node --check governance/dao-policy.mjs
+          node --check governance/preview-eligibility.mjs
       - name: Eden HOPE and EDEN token policy checks
         run: node --test tests/eden-token-scope.test.mjs
       - name: Public site and release gate tests
