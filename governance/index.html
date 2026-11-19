@@ -38,6 +38,22 @@
     </form></section>
     <section class="form" style="max-width:none"><h3>Official admin consultations</h3><p>Authorized Eden administrators may open a separate governance consultation or acknowledge an existing member idea. These ballots are advisory until independently audited governance is launched.</p><div id="admin-consultations" class="eden-poll-list"></div></section>
   </div>
+  <section id="eden-admin-tools" class="form" style="max-width:none" hidden>
+    <h3>Eden administrator review</h3>
+    <p>Administrator-only control. Respond to community ideas and create separate nonbinding DAO consultations. No member poll automatically changes network policy.</p>
+    <div id="eden-admin-polls" class="eden-poll-list"></div>
+    <form id="eden-admin-proposal">
+      <h3>Open an official governance consultation</h3>
+      <label for="adminTitle">Proposal title</label><input id="adminTitle" name="title" minlength="12" maxlength="120" required>
+      <label for="adminDetails">Explanation</label><textarea id="adminDetails" name="details" rows="4" minlength="20" maxlength="1200" required></textarea>
+      <label for="adminImpact">Intended change, risk and review notes</label><textarea id="adminImpact" name="impact" rows="4" minlength="40" maxlength="1200" required></textarea>
+      <label for="adminCategory">Topic</label><select id="adminCategory" name="category"><option value="governance">Governance</option><option value="crypto">Crypto</option><option value="technology">Technology</option><option value="blockchain">Blockchain</option><option value="identity">Identity</option><option value="security">Security</option><option value="network">Network</option><option value="community">Community</option></select>
+      <label for="adminOriginPoll">Optional community poll to acknowledge</label><select id="adminOriginPoll" name="originPollId"><option value="">Independent proposal</option></select>
+      <label for="adminOpt1">First response</label><input id="adminOpt1" name="option1" required minlength="2" maxlength="100" value="Support">
+      <label for="adminOpt2">Second response</label><input id="adminOpt2" name="option2" required minlength="2" maxlength="100" value="Oppose">
+      <button type="submit">Open official consultation for member feedback</button>
+    </form>
+  </section>
   <p><button id="community-refresh" type="button">Refresh community polls</button></p>
 </section>
 <section><h2>Example project proposals</h2><div class="grid" id="proposals"></div></section>
