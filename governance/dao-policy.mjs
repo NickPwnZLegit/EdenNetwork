@@ -2,9 +2,9 @@
 // Inputs are fixtures; wallet and ZK claims MUST be verified by a trusted audited
 // production protocol before any real vote is admitted or tallied.
 export const SAMPLE_PROPOSALS=Object.freeze([
- {id:"proposal-education",project:"Light of Hope",title:"Expand the Open Knowledge Gateway",description:"Prioritize original-source outbound links and clear licensing."},
- {id:"proposal-privacy",project:"EdenNetwork",title:"Adopt private identity audit principles",description:"Require independent verification of privacy and one-human issuance before production DAO voting."},
- {id:"proposal-media",project:"PwnZ.live",title:"Fund low-cost creator media pilots",description:"Compare no-archive streaming and voluntary saved media allowances using synthetic budgets."}
+ {id:"proposal-eden-fees",project:"EdenNetwork",title:"Study low-fee EDEN participation",description:"Compare synthetic Lightchain transaction-cost simulations for small community and governance actions."},
+ {id:"proposal-eden-privacy",project:"EdenNetwork",title:"Review private Eden RealID evidence principles",description:"Study account separation, recovery and privacy without collecting real biometrics or identity mappings."},
+ {id:"proposal-lightvault",project:"EdenNetwork",title:"Explore LightVault governance wallet safeguards",description:"Research wallet-signature verification and EDEN holder snapshot methods before any real voting is enabled."}
 ]);
 export const CHOICES=Object.freeze(["support","oppose","abstain"]);
 export function castSyntheticBallot(registry,request){
