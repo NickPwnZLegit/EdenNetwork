@@ -1,6 +1,61 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EdenNetwork | DAO Governance Lab</title>
-<style>:root{color-scheme:dark;--aqua:#75f3c9}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 5% 8%,#442e7270,transparent 55%),#081222;font:16px/1.6 system-ui,sans-serif;color:#eef8ff}main{width:min(1020px,calc(100% - 32px));margin:auto;padding:30px 0 90px}a{color:#75f3c9}h1{font-size:clamp(2.5rem,7vw,4.9rem);letter-spacing:-.065em;line-height:1.05}h1 em{color:#c2a4ff;font-style:normal}h2{font-size:1.5rem}p{color:#c3d5e6}b{color:white}.pill{display:inline-block;padding:7px 14px;border:1px solid #76f3d29c;border-radius:30px;color:#a6ffcf}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:25px 0}.card,.form{border:1px solid #526b82;background:#142438;border-radius:18px;padding:21px}.card h3{margin:7px 0}.card p{font-size:.94rem}.card small{color:#8af5d1}.form{max-width:720px;margin-top:25px}label{display:block;margin:12px 0 4px;font-weight:720}select,button{font:inherit;padding:11px 13px;border-radius:10px;border:1px solid #6a839b;background:#0c2439;color:white}select{width:100%}button{background:#91ffd0;color:#061c27;border:0;font-weight:760;cursor:pointer;margin-top:13px}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--aqua);outline-offset:3px}.notice{padding:13px;border-left:3px solid #8af9ce;background:#172d3c;margin:18px 0}.box{display:flex;gap:15px;flex-wrap:wrap;align-items:center}.box strong{color:#90f3d2}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stats div{background:#22384c;border-radius:12px;padding:12px}.stats strong{display:block;font-size:1.4rem}.muted{font-size:.85rem;color:#b6c6d9}@media(max-width:770px){.grid,.stats{grid-template-columns:1fr}.card{padding:17px}}</style></head><body><main>
+<style>:root{color-scheme:dark;--aqua:#75f3c9}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 5% 8%,#442e7270,transparent 55%),#081222;font:16px/1.6 system-ui,sans-serif;color:#eef8ff}main{width:min(1020px,calc(100% - 32px));margin:auto;padding:30px 0 90px}a{color:#75f3c9}h1{font-size:clamp(2.5rem,7vw,4.9rem);letter-spacing:-.065em;line-height:1.05}h1 em{color:#c2a4ff;font-style:normal}h2{font-size:1.5rem}p{color:#c3d5e6}b{color:white}.pill{display:inline-block;padding:7px 14px;border:1px solid #76f3d29c;border-radius:30px;color:#a6ffcf}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:25px 0}.card,.form{border:1px solid #526b82;background:#142438;border-radius:18px;padding:21px}.card h3{margin:7px 0}.card p{font-size:.94rem}.card small{color:#8af5d1}.form{max-width:720px;margin-top:25px}label{display:block;margin:12px 0 4px;font-weight:720}select,button{font:inherit;padding:11px 13px;border-radius:10px;border:1px solid #6a839b;background:#0c2439;color:white}select{width:100%}button{background:#91ffd0;color:#061c27;border:0;font-weight:760;cursor:pointer;margin-top:13px}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--aqua);outline-offset:3px}.notice{padding:13px;border-left:3px solid #8af9ce;background:#172d3c;margin:18px 0}.box{display:flex;gap:15px;flex-wrap:wrap;align-items:center}.box strong{color:#90f3d2}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.stats div{background:#22384c;border-radius:12px;padding:12px}.stats strong{display:block;font-size:1.4rem}.muted{font-size:.85rem;color:#b6c6d9}@media(max-width:770px){.grid,.stats{grid-template-columns:1fr}.card{padding:17px}}</style><style>
+.eden-community {margin:34px 0 58px;border-top:1px solid #56687f;padding-top:36px}
+.eden-community input,.eden-community textarea {width:100%;font:inherit;padding:11px 13px;border-radius:10px;border:1px solid #6a839b;background:#0c2439;color:white}
+.eden-community input:focus-visible,.eden-community textarea:focus-visible {outline:3px solid #75f3c9;outline-offset:3px}
+.eden-poll-list {display:grid;gap:14px}
+.eden-poll-card {padding:17px;border:1px solid #5b7690;border-radius:15px;background:#102235}
+.eden-poll-card h3 {margin:7px 0}.eden-poll-card p {margin:6px 0}
+.eden-poll-card small {color:#83efc8}
+.eden-poll-options {display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.eden-poll-option button {background:#193f4a;border:1px solid #62bfa9;color:#d5fff0;margin-top:0;min-height:44px}
+.eden-poll-card .eden-secondary {background:transparent;color:#cfdeef;border:1px solid #61798d;padding:8px 11px;font-size:13px}
+.eden-community button:disabled {opacity:.45;cursor:not-allowed}
+</style></head><body><main>
 <p><a href="/">← EdenNetwork home</a> · <a href="/account/">Eden account preview</a></p><span class="pill">Existing Eden RealID members · Simulation only</span><h1>Governance for<br><em>every human voice.</em></h1><p>This DAO lab demonstrates the planned one-base-vote-per-eligible-human policy, with one optional EDEN-holder vote, capped at two. **No actual uniqueness proof, token wallet, registry eligibility or blockchain tally is implemented here.** Demo participants are synthetic labels.</p>
+<section id="community-polls" class="eden-community">
+  <p class="pill">Eden technology · Crypto discussion · Community voice</p>
+  <h2>Community polls &amp; admin DAO consultations</h2>
+  <p>EdenNetwork is a home for blockchain, cryptocurrency, developers, security, privacy research and technology governance. You can participate here without posting on Light of Hope or PwnZ. Your existing Eden RealID and current ecosystem agreement are required for member actions.</p>
+  <div class="grid"><article class="card"><h3>Community polls</h3><p>Any eligible Eden RealID member can ask a question, choose voting options, and get other members' feedback. Polls are nonbinding and can draw admin attention.</p></article>
+  <article class="card"><h3>Admin review</h3><p>Admins may review popular member ideas, document their response, or decline a suggestion. High vote counts never automatically advance an idea.</p></article>
+  <article class="card"><h3>Official DAO consultations</h3><p>Only authorized admins may open formal governance consultations. These are separate from community polls and do not execute contracts or change the network.</p></article></div>
+  <p id="community-message" class="notice" role="status">Checking community poll availability…</p>
+  <div id="community-disabled"><p class="muted">The authenticated community polling API is being verified. This is no real vote or binding DAO decision; no community ballot can enact changes. Nothing is stored locally as an official vote.</p></div>
+  <div id="community-active" hidden>
+    <section class="form" style="max-width:none"><h3>Technology community polls</h3><div id="member-polls" class="eden-poll-list"></div>
+      <p id="member-signin-note" class="muted">Sign in to your existing Eden RealID account to create polls and vote.</p>
+    </section>
+    <section class="form"><h3>Create a community poll</h3><p class="muted">Members may post one poll every eight hours. Polls stay open for seven days, and each eligible account can vote once per poll.</p>
+    <form id="member-poll-form" hidden>
+      <label for="pollTitle">Question or title</label><input id="pollTitle" name="pollTitle" minlength="12" maxlength="120" required placeholder="Should Eden support a new developer tool?">
+      <label for="pollDetails">Why this matters</label><textarea id="pollDetails" name="pollDetails" minlength="20" maxlength="1200" rows="4" required></textarea>
+      <label for="pollCategory">Topic</label><select id="pollCategory" name="pollCategory"><option value="technology">Technology</option><option value="crypto">Crypto</option><option value="blockchain">Blockchain</option><option value="security">Security</option><option value="identity">Identity</option><option value="governance">Governance</option><option value="network">Network</option><option value="community">Community</option></select>
+      <label for="option1">Option one</label><input id="option1" name="option1" minlength="2" maxlength="100" required>
+      <label for="option2">Option two</label><input id="option2" name="option2" minlength="2" maxlength="100" required>
+      <label for="option3">Optional third option</label><input id="option3" name="option3" maxlength="100">
+      <button type="submit">Post community poll</button>
+    </form></section>
+    <section class="form" style="max-width:none"><h3>Official admin consultations</h3><p>Authorized Eden administrators may open a separate governance consultation or acknowledge an existing member idea. These ballots are advisory until independently audited governance is launched.</p><div id="admin-consultations" class="eden-poll-list"></div></section>
+  </div>
+  <section id="eden-admin-tools" class="form" style="max-width:none" hidden>
+    <h3>Eden administrator review</h3>
+    <p>Administrator-only control. Respond to community ideas and create separate nonbinding DAO consultations. No member poll automatically changes network policy.</p>
+    <div id="eden-admin-polls" class="eden-poll-list"></div>
+    <form id="eden-admin-proposal">
+      <h3>Open an official governance consultation</h3>
+      <label for="adminTitle">Proposal title</label><input id="adminTitle" name="title" minlength="12" maxlength="120" required>
+      <label for="adminDetails">Explanation</label><textarea id="adminDetails" name="details" rows="4" minlength="20" maxlength="1200" required></textarea>
+      <label for="adminImpact">Intended change, risk and review notes</label><textarea id="adminImpact" name="impact" rows="4" minlength="40" maxlength="1200" required></textarea>
+      <label for="adminCategory">Topic</label><select id="adminCategory" name="category"><option value="governance">Governance</option><option value="crypto">Crypto</option><option value="technology">Technology</option><option value="blockchain">Blockchain</option><option value="identity">Identity</option><option value="security">Security</option><option value="network">Network</option><option value="community">Community</option></select>
+      <label for="adminOriginPoll">Optional community poll to acknowledge</label><select id="adminOriginPoll" name="originPollId"><option value="">Independent proposal</option></select>
+      <label for="adminOpt1">First response</label><input id="adminOpt1" name="option1" required minlength="2" maxlength="100" value="Support">
+      <label for="adminOpt2">Second response</label><input id="adminOpt2" name="option2" required minlength="2" maxlength="100" value="Oppose">
+      <button type="submit">Open official consultation for member feedback</button>
+    </form>
+  </section>
+  <p><button id="community-refresh" type="button">Refresh community polls</button></p>
+</section>
 <section><h2>Example project proposals</h2><div class="grid" id="proposals"></div></section>
 <section class="form" aria-label="Vote simulator"><h2>Existing Eden RealID members only</h2><p id="eden-dao-access" class="notice" role="status">Checking your Eden RealID and current 30-day ecosystem agreement…</p><p><a href="/account/">Sign in with an existing Eden RealID</a> · <a href="https://light-of-hope.net/#/profile">Review / renew ecosystem agreement</a></p><h3>Synthetic demonstration ballot</h3><p class="muted">Only authenticated existing Eden RealID members with an active ecosystem agreement may submit even this simulated ballot. A vote exists only in this browser tab's memory. Closing or refreshing resets it. Do not enter a legal name, account ID, wallet address or sensitive information.</p>
 <label for="proposal">Example proposal</label><select id="proposal"></select>
@@ -10,4 +65,4 @@
 <button id="cast" type="button" disabled>Cast simulated ballot</button><p id="notice" class="notice" role="status">Choose a proposal and try voting using synthetic participants.</p>
 <h3>Demo tally: <span id="active"></span></h3><div class="stats" id="totals" aria-live="polite"></div><p class="muted">Repeated ballots from the same fixture are rejected. This does not prove personhood, and the holder toggle does not verify token ownership.</p></section>
 <section class="card"><h2>Before actual DAO activation</h2><p>A real release needs consent-based and independently tested unique-human issuance, secure revocation and recovery, unlinkable per-proposal nullifiers, auditable EDEN holding snapshots, proposal authority, verified chain receipts, abuse protections and legal review. ANNEAL can suggest research findings but cannot decide voting eligibility or outcomes.</p><p><a href="https://hope-labs-research.vercel.app/" rel="noopener noreferrer">Explore Hope Labs research</a> · <a href="https://light-of-hope.net" rel="noopener noreferrer">Light of Hope</a></p></section>
-</main><script type="module" src="/governance/governance.js"></script></body></html>
+</main><script type="module" src="/governance/governance.js"></script><script type="module" src="/governance/community-polls.js"></script></body></html>
