@@ -16,6 +16,8 @@ jobs:
         run: node --test tests/eden-account-gateway.test.mjs tests/dao-policy.test.mjs tests/dao-eligibility.test.mjs
       - name: Advisory member polls and administrator proposals
         run: node --test tests/eden-community-polls-ui.test.mjs
+      - name: Shared full ecosystem agreement and renewal navigation
+        run: node --test tests/eden-ecosystem-agreement.test.mjs
       - name: Client and server JavaScript syntax
         run: |
           node --check api/eden-config.js
