@@ -25,3 +25,5 @@ jobs:
         run: node --test tests/eden-token-scope.test.mjs
       - name: Public site and release gate tests
         run: node --test tests/public-site-release.test.mjs
+      - name: Connected network homepage links and research-only claims
+        run: node --test tests/eden-network-home-links.test.mjs
