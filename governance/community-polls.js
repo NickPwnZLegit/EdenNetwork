@@ -110,9 +110,9 @@ $("eden-admin-proposal").addEventListener("submit",async e=>{
  e.preventDefault();if(!adminAuthorized)return;
  const f=e.currentTarget;
  const result=await mutate({
-  action:"admin-create-proposal",title:f.title.value,details:f.details.value,
-  impact:f.impact.value,category:f.category.value,
-  originPollId:f.originPollId.value||undefined,options:[f.option1.value,f.option2.value]
+  action:"admin-create-proposal",title:f.elements.namedItem('title').value,details:f.elements.namedItem('details').value,
+  impact:f.elements.namedItem('impact').value,category:f.elements.namedItem('category').value,
+  originPollId:f.elements.namedItem('originPollId').value||undefined,options:[f.elements.namedItem('option1').value,f.elements.namedItem('option2').value]
  });
  if(result){f.reset();await refreshAdmin();}
 });
@@ -137,9 +137,9 @@ async function mutate(body){
 $("member-poll-form").addEventListener("submit",e=>{
  e.preventDefault();
  const form=e.currentTarget;
- const options=[form.option1.value,form.option2.value,form.option3.value].map(s=>s.trim()).filter(Boolean);
- mutate({action:"create-poll",title:form.pollTitle.value,details:form.pollDetails.value,
-  category:form.pollCategory.value,options});
+ const options=[form.elements.namedItem('option1').value,form.elements.namedItem('option2').value,form.elements.namedItem('option3').value].map(s=>s.trim()).filter(Boolean);
+ mutate({action:"create-poll",title:form.elements.namedItem('pollTitle').value,details:form.elements.namedItem('pollDetails').value,
+  category:form.elements.namedItem('pollCategory').value,options});
 });
 $("community-refresh").addEventListener("click",reload);
 (async()=>{
