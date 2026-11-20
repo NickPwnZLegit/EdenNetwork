@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
-const {enabled,validAuthorization,safeStatus,trustedPreviewOrigin}=require("../api/eden-account-status.js");
+const {enabled,validAuthorization,safeStatus,trustedPreviewOrigin}=require("../api/eden-account-status.js")._test;
 test("same-project preview-only feature gate",()=>{
  const env={VERCEL_ENV:"preview",EDEN_ACCOUNT_STATUS_TESTNET_ENABLED:"true",
    EDEN_FIREBASE_PROJECT_ID:"synthetic",EDEN_SHARED_FIREBASE_PROJECT_ID:"synthetic"};
