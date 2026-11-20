@@ -5,6 +5,7 @@
 <h1>One Eden RealID.<br><span>Across the ecosystem.</span></h1>
 <p class="muted">Sign in with an existing ecosystem account, or create your Eden RealID when the shared registrar is authorized for testing. Your public handle is separate from private account ownership. No legal ID, faceprint or wallet is collected here.</p>
 <p id="status" class="status" role="status">Checking Firebase account access…</p>
+<section id="renewal-notice" class="box" hidden><h2>Renew your ecosystem agreement</h2><p>The shared agreement has expired or changed. You have been signed out once. Sign in again and the complete agreement will appear automatically before community participation. Your account and Eden RealID are preserved.</p></section>
 <section id="logged-out" class="box" hidden><div class="row"><button id="login-mode" type="button">Existing sign-in</button><button class="secondary" id="create-mode" type="button">Create Eden RealID</button></div>
 <form id="auth-form"><label>Email<input id="email" type="email" autocomplete="email" maxlength="254" required></label><label>Password<input id="password" type="password" autocomplete="current-password" minlength="6" required></label>
 <label id="name-label" hidden>Your Eden RealID<input id="eden-name" autocomplete="off" minlength="4" maxlength="64" placeholder="Unique Eden profile name"></label>
@@ -12,6 +13,14 @@
 <p id="reg-note" class="muted"></p></section>
 <section id="logged-in" class="box" hidden><h2>Authenticated account</h2><p class="muted">This is an account sign-in, not a verified unique-human or zero-knowledge personhood credential.</p><p id="account-status"></p>
 <section id="complete-panel" hidden><h3>Complete Eden RealID registration</h3><label>Available Eden RealID<input id="complete-name" minlength="4" maxlength="64"></label><button type="button" id="complete">Activate this Eden RealID</button></section>
+<section id="eden-agreement-panel" class="box" hidden>
+<h2>One 30-day ecosystem agreement</h2>
+<p>Read and accept the current complete Light of Hope Ecosystem Community Rules here. This one acceptance applies across EdenNetwork, Light of Hope and PwnZ; no extra registration is needed.</p>
+<div id="eden-agreement-full" role="region" tabindex="0" aria-label="Complete ecosystem agreement" style="max-height:320px;overflow:auto;padding:14px;background:#071522;border:1px solid #466c78;border-radius:12px">Loading current agreement…</div>
+<p id="eden-agreement-version" class="muted"></p>
+<label><input id="eden-accept-check" type="checkbox" disabled style="width:auto;display:inline-block"> I have read and agree to the full current community rules.</label>
+<button type="button" id="eden-accept-submit" disabled>Accept for 30 days</button><p id="eden-agreement-status" role="status"></p>
+</section>
 <div class="row"><a href="https://light-of-hope.net/#/profile" rel="noopener noreferrer">Open Light of Hope profile and agreement</a><a href="https://pwnz.live/social/" rel="noopener noreferrer">Open PwnZ gamer profile</a></div><button id="logout" class="secondary" type="button">Sign out</button></section>
 <footer>Sign-in sessions are local to each website. An Eden account can be recognized by the same Firebase project across participating sites, but browser sessions are not transferred automatically. No DAO voting or token entitlement is active.</footer>
 </main><script type="module" src="/account/account.js"></script></body></html>
