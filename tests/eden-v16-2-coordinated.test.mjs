@@ -35,5 +35,5 @@ test("Eden verifies agreement during session restore without collecting biometri
  assert.match(js,/AGREEMENT_VERSIONS/);
  assert.match(js,/expires\.getTime\(\)>Date\.now\(\)/);
  assert.match(js,/await Promise\.all\(\[loadOwner\(user\),loadAgreement\(user\)\]\)/);
- assert.match(html,/30-day community agreement/);
+ assert.match(js,/30-day community agreement/);
 });
