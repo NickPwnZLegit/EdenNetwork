@@ -88,7 +88,12 @@ $("logout").addEventListener("click",()=>auth&&signOut(auth));
 (async()=>{
  try{
   const response=await fetch("/api/eden-config",{cache:"no-store"});const cfg=await response.json();
-  if(!cfg.configured||!cfg.config){status("Firebase web authentication is not configured in this preview.");return;}
+  if(!cfg.configured||!cfg.config){
+   const allowed=new Set(["apiKey","authDomain","projectId","appId"]);
+   const fields=Array.isArray(cfg.missingFields)?cfg.missingFields.filter(x=>allowed.has(x)):[];
+   status("EdenNetwork Firebase web authentication is incomplete"+(fields.length?": "+fields.join(", "):".")+" The existing account is safe; this deployment must be configured before login.");
+   return;
+  }
   registryEnabled=cfg.registryEnabled===true;
   const app=initializeApp(cfg.config);auth=getAuth(app);db=getFirestore(app);
   try{await setPersistence(auth,browserLocalPersistence);}catch{status("Persistent sign-in unavailable on this browser.");}
