@@ -16,6 +16,8 @@ jobs:
         run: node --test tests/eden-account-gateway.test.mjs tests/dao-policy.test.mjs tests/dao-eligibility.test.mjs
       - name: Advisory member polls and administrator proposals
         run: node --test tests/eden-community-polls-ui.test.mjs
+      - name: Cross-network status preview safety checks
+        run: node --test tests/eden-crossnetwork-status.test.mjs
       - name: Client and server JavaScript syntax
         run: |
           node --check api/eden-config.js
