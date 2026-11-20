@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {createRequire} from "node:module";
 const require=createRequire(import.meta.url);
-const {enabled,validAuthorization,safeStatus}=require("../api/eden-account-status.js");
+const {enabled,validAuthorization,safeStatus,trustedPreviewOrigin}=require("../api/eden-account-status.js");
 test("same-project preview-only feature gate",()=>{
  const env={VERCEL_ENV:"preview",EDEN_ACCOUNT_STATUS_TESTNET_ENABLED:"true",
    EDEN_FIREBASE_PROJECT_ID:"synthetic",EDEN_SHARED_FIREBASE_PROJECT_ID:"synthetic"};
@@ -27,4 +27,17 @@ test("only known boolean fields returned, all identity data removed",()=>{
  assert.equal(result.sharedServicesAuthorized,false);
  assert.equal(safeStatus({...payload,edenRealIdActive:1}),null);
  assert.equal(safeStatus({...payload,mode:"production"}),null);
+});
+
+test("relay only forwards tokens to a pinned Light of Hope preview host",()=>{
+ const good={HOPE_ACCOUNT_STATUS_PREVIEW_ORIGIN:"https://light-of-hope-site-git-testing.vercel.app"};
+ assert.equal(trustedPreviewOrigin(good),"https://light-of-hope-site-git-testing.vercel.app");
+ for(const origin of [
+  "http://light-of-hope-site-git-testing.vercel.app",
+  "https://light-of-hope-site.vercel.app.evil.test",
+  "https://light-of-hope-site.vercel.app@evil.test",
+  "https://evil.vercel.app",
+  "https://light-of-hope-site.vercel.app/private",
+  "https://light-of-hope-site.vercel.app?test=1"
+ ])assert.equal(trustedPreviewOrigin({HOPE_ACCOUNT_STATUS_PREVIEW_ORIGIN:origin}),null);
 });
