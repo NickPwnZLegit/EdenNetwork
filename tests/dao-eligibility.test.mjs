@@ -17,4 +17,8 @@ test("agreement version, acceptance and uid must match",()=>{
  assert.equal(valid(owner,{...agreement,accepted:false}),false);
  assert.equal(valid(owner,{...agreement,uid:"someone-else"}),false);
 });
+test("new Hope Network agreement receipt is eligible for DAO preview",()=>{
+ assert.equal(valid(owner,{...agreement,agreementVersion:"ecosystem-2026.11.18.1"}),true);
+ assert.equal(valid(owner,{...agreement,agreementVersion:"ecosystem-2026.11.18.1",expiresAt:{toMillis:()=>1}}),false);
+});
 test("public handle must not expose an email",()=>assert.equal(valid({...owner,displayName:"user@example.com"}),false));
