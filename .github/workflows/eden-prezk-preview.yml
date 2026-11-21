@@ -1,0 +1,21 @@
+name: Eden Pre-ZK Device Preview Checks
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  device-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: First-party Eden pre-ZK device gateway
+        run: node --test tests/eden-prezk-device-bridge.test.mjs
+      - name: Check account, gateway and browser key module syntax
+        run: |
+          node --check account/account.js
+          node --check api/prezk-device.js
+          node --check prezk/device.js
