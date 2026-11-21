@@ -1,6 +1,7 @@
 import {initializeApp} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmailAndPassword,sendPasswordResetEmail,signOut,setPersistence,browserLocalPersistence} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import {getFirestore,doc,getDoc} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {inspectPreZkDevice,testPreZkDevice} from "../prezk/device.js";
 const $=id=>document.getElementById(id);
 let auth=null,db=null,registryEnabled=false,mode="signin";
 const AGREEMENT_VERSIONS=new Set(["v16-2026.08.27.1","ecosystem-2026.11.18.1"]);
@@ -84,6 +85,31 @@ $("auth-form").addEventListener("submit",async e=>{
 $("complete").addEventListener("click",async()=>{const name=$("complete-name").value.trim();$("complete").disabled=true;try{
  await register("reserve-activate",name);status("Eden RealID activated. Accept the community agreement on Light of Hope.");await loadOwner(auth.currentUser);
  }catch(e){status(e.message);}finally{$("complete").disabled=false;}});
+async function preZkAction(action){
+ const u=auth?.currentUser;if(!u)return;
+ const out=$("prezk-status");out.textContent="Checking device security preview…";
+ for(const id of ["prezk-run","prezk-refresh","prezk-recovery"])$(id).disabled=true;
+ try{
+  const token=await u.getIdToken();
+  const args={uid:u.uid,idToken:token,network:"eden-network"};
+  if(action==="run"){
+   const result=await testPreZkDevice(args);
+   out.textContent=result.status==="device-enrolled"?"Browser key enrolled with a server timestamp.":"This browser signed a fresh server challenge.";
+  }else if(action==="recovery"){
+   const response=await fetch("/api/prezk-device",{method:"POST",cache:"no-store",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({action:"request-recovery",network:"eden-network"})});
+   const json=await response.json().catch(()=>({}));
+   if(!response.ok||!json.ok)throw Error(json.error||"Request unavailable.");
+   out.textContent="Private device recovery request recorded for human review. The existing key was not replaced.";
+  }else{
+   const value=await inspectPreZkDevice(args);
+   out.textContent=value.enrolled?"Device key enrolled on EdenNetwork "+(value.registeredAt||""):"No device key enrolled on this site. Your existing Firebase account remains unaffected.";
+  }
+ }catch(error){out.textContent=error.message||"Device proof test unavailable."}
+ finally{for(const id of ["prezk-run","prezk-refresh","prezk-recovery"])$(id).disabled=false}
+}
+$("prezk-run").addEventListener("click",()=>preZkAction("run"));
+$("prezk-refresh").addEventListener("click",()=>preZkAction("refresh"));
+$("prezk-recovery").addEventListener("click",()=>preZkAction("recovery"));
 $("logout").addEventListener("click",()=>auth&&signOut(auth));
 (async()=>{
  try{
