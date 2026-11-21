@@ -3,10 +3,10 @@ import {getAuth,onAuthStateChanged,signInWithEmailAndPassword,createUserWithEmai
 import {getFirestore,doc,getDoc} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {inspectPreZkDevice,testPreZkDevice} from "../prezk/device.js";
 const $=id=>document.getElementById(id);
-let auth=null,db=null,registryEnabled=false,mode="signin";
+let auth=null,db=null,registryEnabled=false,prezkReady=false,mode="signin";
 const AGREEMENT_VERSIONS=new Set(["v16-2026.08.27.1","ecosystem-2026.11.18.1"]);
 function status(m){$("status").textContent=m;}
-function screen(user){$("logged-out").hidden=Boolean(user);$("logged-in").hidden=!user;}
+function screen(user){$("logged-out").hidden=Boolean(user);$("logged-in").hidden=!user;$("prezk-panel").hidden=!user||!prezkReady;}
 function selectMode(next){mode=next;const creating=mode==="create";$("name-label").hidden=!creating;$("eden-name").required=creating;$("new-account-consent").hidden=!creating;$("no-existing-eden").required=creating;$("auth-submit").textContent=creating?"Create Eden RealID":"Sign in";$("reg-note").textContent=creating
  ?registryEnabled?"Shared registration is available in this development preview.":"New registration is disabled until the shared Firebase project and registrar are verified."
  :"Sign in using the email/password already associated with your ecosystem account.";}
@@ -121,6 +121,7 @@ $("logout").addEventListener("click",()=>auth&&signOut(auth));
    return;
   }
   registryEnabled=cfg.registryEnabled===true;
+  try{prezkReady=(await fetch("/api/prezk-device",{cache:"no-store"})).status===401;}catch{prezkReady=false;}
   const app=initializeApp(cfg.config);auth=getAuth(app);db=getFirestore(app);
   try{await setPersistence(auth,browserLocalPersistence);}catch{status("Persistent sign-in unavailable on this browser.");}
   selectMode("signin");
